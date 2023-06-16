@@ -12,6 +12,10 @@ services:
       MYSQL_PASSWORD: bright79
     ports:
       - "3306:3306"
+    healthcheck:
+      test: ["CMD", "mysqladmin" ,"ping", "-h", "localhost"]
+      timeout: 20s
+      retries: 10
   backend:
     restart: always
     build:
@@ -20,11 +24,12 @@ services:
     ports:
       - "8081:8081"
     environment:
-      - MYSQL_HOST=host.docker.internal
+      - MYSQL_HOST=db
     links:
       - db
     depends_on:
-      - db
+      db:
+        condition: service_healthy
   frontend:
     restart: always
     build:
