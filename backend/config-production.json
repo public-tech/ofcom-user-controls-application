@@ -1,26 +1,18 @@
 {
   "database": {
-    "name": "",
-    "username": "",
-    "password": "",
-    "host": "",
+    "name": "mocksocialmediadb",
+    "username": "appuser",
+    "password": "bright79",
+    "host": "localhost", 
     "port": "3306",
     "dialect": "mysql"
   },
   "adminCredentials": [
     {
-      "username": "",
-      "password": ""
-    },
-    {
-      "username": "",
-      "password": ""
-    },
-    {
-      "username": "",
-      "password": ""
+      "username": "test",
+      "password": "test"
     }
   ],
-  "secret": "",
-  "secretUser": ""
+  "secret": "asfasfads",
+  "secretUser": "dsgdfdfhnfgmf"
 }

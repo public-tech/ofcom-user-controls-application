@@ -19,13 +19,12 @@ services:
       - app-network
   backend:
     restart: always
-    build:
-      context: ./backend
-      dockerfile: ./Dockerfile
+    image: 353386523821.dkr.ecr.eu-west-2.amazonaws.com/public-tech/ofcom-user-controls-application-backend:latest
     ports:
       - "8081:8081"
     environment:
       - MYSQL_HOST=db
+      - NODE_ENV=production
     links:
       - db
     depends_on:
@@ -35,11 +34,13 @@ services:
       - app-network
   frontend:
     restart: always
-    build:
-      context: ./frontend
-      dockerfile: ./Dockerfile
+    image: 353386523821.dkr.ecr.eu-west-2.amazonaws.com/public-tech/ofcom-user-controls-application-frontend:latest
+    environment:
+      - MYSQL_HOST=db
+      - NODE_ENV=production
+      - PORT=8080
     ports:
-      - "8082:8082"
+      - "8080:8080"
     links:
       - "backend:local"
     depends_on:
