@@ -50,25 +50,27 @@ const checkConfigFileExist = () => {
 }
 
 const testConnection = async () => {
+  
   console.log('Checking if database exist...');
-  try {
-    let databaseConfig = databaseConfigurations();
-    console.log('Opening connection...');
-    const connection = await mysql.createConnection({
-      host: databaseConfig.host,
-      port: databaseConfig.port,
-      user: databaseConfig.username,
-      password: databaseConfig.password,
-      debug: false
-    });
-    await connection.query(`CREATE DATABASE IF NOT EXISTS \`${databaseConfig.name}\`;`);
-    console.log('Database has been successfully checked and/or created.');
-    await connection.end();
-    console.log('Connection closed!');
-  } catch (error) {
-    console.error('Exiting... Unable to check and/or create a database: ', error);
-    process.exit(1);
-  }
+  
+  let databaseConfig = databaseConfigurations();
+  
+  console.log('Opening connection...');
+  
+  const connection = await mysql.createConnection({
+    host: databaseConfig.host,
+    port: databaseConfig.port,
+    user: databaseConfig.username,
+    password: databaseConfig.password,
+    debug: false
+  });
+
+  connection.connect(function(err) {
+    if (err) {
+        return console.error('error: ' + err.message);
+    }
+    return true
+  });
 }
 
 
@@ -187,5 +189,4 @@ try {
   });
 } catch (error) {
   console.log('Error: ', error);
-  process.exit(1);
 }
